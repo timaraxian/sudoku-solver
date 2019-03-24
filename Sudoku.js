@@ -1,93 +1,107 @@
-export function NewBoard() {
-    return {
-        s1: {
+export function NewBoard(boardArray) {
+    if (typeof boardArray === 'undefined') {
+        boardArray = new Array(81)
+    }
+
+    const boardProperties =  {
+        sq1: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s2: {
+        sq2: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s3: {
+        sq3: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s4: {
+        sq4: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s5: {
+        sq5: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s6: {
+        sq6: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s7: {
+        sq7: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s8: {
+        sq8: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        s9: {
+        sq9: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r1: {
+        row1: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r2: {
+        row2: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r3: {
+        row3: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r4: {
+        row4: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r5: {
+        row5: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r6: {
+        row6: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r7: {
+        row7: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r8: {
+        row8: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        r9: {
+        row9: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c1: {
+        col1: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c2: {
+        col2: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c3: {
+        col3: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c4: {
+        col4: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c5: {
+        col5: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c6: {
+        col6: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c7: {
+        col7: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c8: {
+        col8: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
-        c9: {
+        col9: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
     }
+
+    boardArray.forEach((val, i) => {
+        if (val === '') return
+        const {sq, row, col} = CellProperties(i)
+        boardProperties[sq][val] = true
+        boardProperties[row][val] = true
+        boardProperties[col][val] = true
+    })
+
+    return boardProperties
 }
 
 export function CellProperties(cell) {
     const row = Math.floor(cell / 9) + 1
     const col = cell % 9 + 1
-    const sq = 3 * Math.floor((row-1) / 3) + Math.floor((col-1) / 3) + 1
+    const sq = 3 * Math.floor((row - 1) / 3) + Math.floor((col - 1) / 3) + 1
 
     return { sq: 'sq' + sq, row: 'row' + row, col: 'col' + col, }
 }
