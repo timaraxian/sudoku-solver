@@ -91,4 +91,15 @@ describe("main.js", () => {
 
         expect(board).toEqual(expectedBoard)
     })
+
+    it("correctly returns the sq, row, col a cell belongs to", () => {
+        expect(Sudoku.CellProperties(0)).toEqual({ sq: 'sq1', row: 'row1', col: 'col1'})
+        expect(Sudoku.CellProperties(7)).toEqual({ sq: 'sq3', row: 'row1', col: 'col8'})
+        expect(Sudoku.CellProperties(37)).toEqual({ sq: 'sq4', row: 'row5', col: 'col2'})
+        expect(Sudoku.CellProperties(13)).toEqual({ sq: 'sq2', row: 'row2', col: 'col5'})
+        expect(Sudoku.CellProperties(51)).toEqual({ sq: 'sq6', row: 'row6', col: 'col7'})
+        expect(Sudoku.CellProperties(23)).toEqual({ sq: 'sq2', row: 'row3', col: 'col6'})
+        expect(Sudoku.CellProperties(54)).toEqual({ sq: 'sq7', row: 'row7', col: 'col1'})
+        expect(Sudoku.CellProperties(80)).toEqual({ sq: 'sq9', row: 'row9', col: 'col9'})
+    })
 })
