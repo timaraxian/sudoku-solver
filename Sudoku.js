@@ -83,3 +83,11 @@ export function NewBoard() {
         },
     }
 }
+
+export function CellProperties(cell) {
+    const row = Math.floor(cell / 9) + 1
+    const col = cell % 9 + 1
+    const sq = 3 * Math.floor((row-1) / 3) + Math.floor((col-1) / 3) + 1
+
+    return { sq: 'sq' + sq, row: 'row' + row, col: 'col' + col, }
+}
