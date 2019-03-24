@@ -6,85 +6,85 @@ describe("main.js", () => {
         const board = Sudoku.NewBoard()
 
         const expectedBoard = {
-            s1: {
+            sq1: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s2: {
+            sq2: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s3: {
+            sq3: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s4: {
+            sq4: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s5: {
+            sq5: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s6: {
+            sq6: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s7: {
+            sq7: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s8: {
+            sq8: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            s9: {
+            sq9: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r1: {
+            row1: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r2: {
+            row2: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r3: {
+            row3: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r4: {
+            row4: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r5: {
+            row5: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r6: {
+            row6: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r7: {
+            row7: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r8: {
+            row8: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            r9: {
+            row9: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c1: {
+            col1: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c2: {
+            col2: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c3: {
+            col3: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c4: {
+            col4: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c5: {
+            col5: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c6: {
+            col6: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c7: {
+            col7: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c8: {
+            col8: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
-            c9: {
+            col9: {
                 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
             },
         }
@@ -101,5 +101,106 @@ describe("main.js", () => {
         expect(Sudoku.CellProperties(23)).toEqual({ sq: 'sq2', row: 'row3', col: 'col6'})
         expect(Sudoku.CellProperties(54)).toEqual({ sq: 'sq7', row: 'row7', col: 'col1'})
         expect(Sudoku.CellProperties(80)).toEqual({ sq: 'sq9', row: 'row9', col: 'col9'})
+    })
+
+    it("initialises a specified sudoku board", () => {
+        const boardArray = [
+            1, '', 5, 3, 4, '', '', 9, 2,
+            8, '', '', '', 1, '', '', '', '',
+            '', '', '', 5, 7, '', 4, '', '',
+            9, 6, '', 2, '', '', 8, 4, '',
+            4, 2, '', '', '', '', '', 6, 5,
+            '', 8, 1, '', '', 7, '', 2, 9,
+            '', '', 9, '', 8, 3, '', '', '',
+            '', '', '', '', 5, '', '', '', 6,
+            7, 5, '', '', 2, 6, 9, '', 3,
+        ]
+        const board = Sudoku.NewBoard(boardArray)
+
+        const expectedBoard = {
+            sq1: {
+                1: true, 2: false, 3: false, 4: false, 5: true, 6: false, 7: false, 8: true, 9: false,
+            },
+            sq2: {
+                1: true, 2: false, 3: true, 4: true, 5: true, 6: false, 7: true, 8: false, 9: false,
+            },
+            sq3: {
+                1: false, 2: true, 3: false, 4: true, 5: false, 6: false, 7: false, 8: false, 9: true,
+            },
+            sq4: {
+                1: true, 2: true, 3: false, 4: true, 5: false, 6: true, 7: false, 8: true, 9: true,
+            },
+            sq5: {
+                1: false, 2: true, 3: false, 4: false, 5: false, 6: false, 7: true, 8: false, 9: false,
+            },
+            sq6: {
+                1: false, 2: true, 3: false, 4: true, 5: true, 6: true, 7: false, 8: true, 9: true,
+            },
+            sq7: {
+                1: false, 2: false, 3: false, 4: false, 5: true, 6: false, 7: true, 8: false, 9: true,
+            },
+            sq8: {
+                1: false, 2: true, 3: true, 4: false, 5: true, 6: true, 7: false, 8: true, 9: false,
+            },
+            sq9: {
+                1: false, 2: false, 3: true, 4: false, 5: false, 6: true, 7: false, 8: false, 9: true,
+            },
+            row1: {
+                1: true, 2: true, 3: true, 4: true, 5: true, 6: false, 7: false, 8: false, 9: true,
+            },
+            row2: {
+                1: true, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: true, 9: false,
+            },
+            row3: {
+                1: false, 2: false, 3: false, 4: true, 5: true, 6: false, 7: true, 8: false, 9: false,
+            },
+            row4: {
+                1: false, 2: true, 3: false, 4: true, 5: false, 6: true, 7: false, 8: true, 9: true,
+            },
+            row5: {
+                1: false, 2: true, 3: false, 4: true, 5: true, 6: true, 7: false, 8: false, 9: false,
+            },
+            row6: {
+                1: true, 2: true, 3: false, 4: false, 5: false, 6: false, 7: true, 8: true, 9: true,
+            },
+            row7: {
+                1: false, 2: false, 3: true, 4: false, 5: false, 6: false, 7: false, 8: true, 9: true,
+            },
+            row8: {
+                1: false, 2: false, 3: false, 4: false, 5: true, 6: true, 7: false, 8: false, 9: false,
+            },
+            row9: {
+                1: false, 2: true, 3: true, 4: false, 5: true, 6: true, 7: true, 8: false, 9: true,
+            },
+            col1: {
+                1: true, 2: false, 3: false, 4: true, 5: false, 6: false, 7: true, 8: true, 9: true,
+            },
+            col2: {
+                1: false, 2: true, 3: false, 4: false, 5: true, 6: true, 7: false, 8: true, 9: false,
+            },
+            col3: {
+                1: true, 2: false, 3: false, 4: false, 5: true, 6: false, 7: false, 8: false, 9: true,
+            },
+            col4: {
+                1: false, 2: true, 3: true, 4: false, 5: true, 6: false, 7: false, 8: false, 9: false,
+            },
+            col5: {
+                1: true, 2: true, 3: false, 4: true, 5: true, 6: false, 7: true, 8: true, 9: false,
+            },
+            col6: {
+                1: false, 2: false, 3: true, 4: false, 5: false, 6: true, 7: true, 8: false, 9: false,
+            },
+            col7: {
+                1: false, 2: false, 3: false, 4: true, 5: false, 6: false, 7: false, 8: true, 9: true,
+            },
+            col8: {
+                1: false, 2: true, 3: false, 4: true, 5: false, 6: true, 7: false, 8: false, 9: true,
+            },
+            col9: {
+                1: false, 2: true, 3: true, 4: false, 5: true, 6: true, 7: false, 8: false, 9: true,
+            },
+        }
+
+        expect(board).toEqual(expectedBoard)
     })
 })
