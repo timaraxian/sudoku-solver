@@ -3,7 +3,7 @@ export function NewBoard(boardArray) {
         boardArray = new Array(81)
     }
 
-    const boardProperties =  {
+    const boardProperties = {
         sq1: {
             1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false,
         },
@@ -87,15 +87,18 @@ export function NewBoard(boardArray) {
         },
     }
 
+    let fixedCells = {}
+
     boardArray.forEach((val, i) => {
         if (val === '') return
-        const {sq, row, col} = CellProperties(i)
+        const { sq, row, col } = CellProperties(i)
         boardProperties[sq][val] = true
         boardProperties[row][val] = true
         boardProperties[col][val] = true
+        fixedCells['cell'+i] = true
     })
 
-    return boardProperties
+    return { ...boardProperties, fixedCells: fixedCells }
 }
 
 export function CellProperties(cell) {
@@ -104,4 +107,41 @@ export function CellProperties(cell) {
     const sq = 3 * Math.floor((row - 1) / 3) + Math.floor((col - 1) / 3) + 1
 
     return { sq: 'sq' + sq, row: 'row' + row, col: 'col' + col, }
+}
+
+export function Solve(boardArray, boardProperties) {
+    let i = 0
+    let backtracking = false
+
+    while (i < 81) {
+        if (boardProperties.fixedCells['cell'+i]) {
+            backtracking ? i-- : i++
+            continue
+        }
+
+        let j = boardArray[i] === '' ? 1 : boardArray[i]
+        let set = false
+        const { sq, row, col } = CellProperties(i)
+        while (j <= 9) {
+            if (!boardProperties[sq][j] &&
+                !boardProperties[row][j] &&
+                !boardProperties[col][j]
+            ) {
+                boardArray[i] = j
+                backtracking = false
+                set = true
+                break
+            }
+            j++
+        }
+        if (!set) {
+            backtracking = true
+            boardArray[i] = ''
+            i--
+            continue
+        }
+        i++
+    }
+
+    return boardArray
 }
