@@ -95,7 +95,7 @@ export function NewBoard(boardArray) {
         boardProperties[sq][val] = true
         boardProperties[row][val] = true
         boardProperties[col][val] = true
-        fixedCells['cell'+i] = true
+        fixedCells['cell' + i] = true
     })
 
     return { ...boardProperties, fixedCells: fixedCells }
@@ -114,7 +114,7 @@ export function Solve(boardArray, boardProperties) {
     let backtracking = false
 
     while (i < 81) {
-        if (boardProperties.fixedCells['cell'+i]) {
+        if (boardProperties.fixedCells['cell' + i]) {
             backtracking ? i-- : i++
             continue
         }
@@ -122,12 +122,21 @@ export function Solve(boardArray, boardProperties) {
         let j = boardArray[i] === '' ? 1 : boardArray[i]
         let set = false
         const { sq, row, col } = CellProperties(i)
+        if (backtracking) {
+            boardProperties[sq][j] = false
+            boardProperties[row][j] = false
+            boardProperties[col][j] = false
+            j++
+        }
         while (j <= 9) {
             if (!boardProperties[sq][j] &&
                 !boardProperties[row][j] &&
                 !boardProperties[col][j]
             ) {
                 boardArray[i] = j
+                boardProperties[sq][j] = true
+                boardProperties[row][j] = true
+                boardProperties[col][j] = true
                 backtracking = false
                 set = true
                 break
