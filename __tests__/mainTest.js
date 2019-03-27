@@ -1,4 +1,4 @@
-import * as Sudoku from "../Sudoku.js"
+import * as Sudoku from "../src/Sudoku.js"
 
 describe("main.js", () => {
 
