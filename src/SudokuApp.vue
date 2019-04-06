@@ -1,18 +1,18 @@
 <script>
-    import * as Sudoku from './Sudoku'
+    import Board from './SudokuBoard'
+    import * as Solver from './SudokuSolver'
 
     export default {
 
         data() {
             return {
-                boardArray: [],
+                board: Board(),
                 boardProps: {},
             }
         },
 
         methods: {
-            initBoard: () => Sudoku.NewBoard(this.boardArray),
-            doSolve: () => Sudoku.Solve(this.boardArray, this.boardProps),
+            doSolve: () => Solver.Solve(this.board.AsArray()),
             getClass(row, col) {
                 let c = "cell"
 
