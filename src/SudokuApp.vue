@@ -1,18 +1,39 @@
 <script>
     import Board from './SudokuBoard'
-    import * as Solver from './SudokuSolver'
+    import Solver from './SudokuSolver'
 
     export default {
 
         data() {
             return {
                 board: Board(),
-                boardProps: {},
+                solver: Solver(),
+                solved: [],
+            }
+        },
+
+        computed: {
+            boardArray() {
+
+                const boardArray = []
+                for (let j = 0; j < 9; j++) {
+                    boardArray[j] = this.board.AsArray().slice(j * 9, j * 9 + 9)
+                }
+                return boardArray
+            },
+            solvedArray() {
+                const solvedArray = []
+                for (let j = 0; j < 9; j++) {
+                    solvedArray[j] = this.solved.slice(j * 9, j * 9 + 9)
+                }
+                return solvedArray
             }
         },
 
         methods: {
-            doSolve: () => Solver.Solve(this.board.AsArray()),
+            doSolve() {
+                this.solved = this.solver.Solve(this.board.AsArray())
+            },
             getClass(row, col) {
                 let c = "cell"
 
@@ -32,49 +53,50 @@
                     c += " right"
                 }
 
-                if (this.boardProps.fixedCells['cell' + (row * 9 + col)]) {
+                if (this.board.GetFixed(row, col)) {
                     c += " fixed"
                 }
 
                 return c
             },
-            fixed(row, col) { return this.boardProps.fixedCells['cell' + (row * 9 + col)] },
+            fixed(row, col) { return this.board.GetFixed(row, col) },
+            setCell(row, col, val) {
+                this.board.Set(row, col, val)
+            },
         },
-
-        mounted() {
-            const board = [
-                1, '', 5, 3, 4, '', '', 9, 2,
-                8, '', '', '', 1, '', '', '', '',
-                '', '', '', 5, 7, '', 4, '', '',
-                9, 6, '', 2, '', '', 8, 4, '',
-                4, 2, '', '', '', '', '', 6, 5,
-                '', 8, 1, '', '', 7, '', 2, 9,
-                '', '', 9, '', 8, 3, '', '', '',
-                '', '', '', '', 5, '', '', '', 6,
-                7, 5, '', '', 2, 6, 9, '', 3,
-            ]
-            this.boardArray = []
-            this.boardProps = Sudoku.NewBoard(board)
-            for (let j = 0; j < 9; j++) {
-                this.boardArray[j] = board.slice(j * 9, j * 9 + 9)
-            }
-        }
-        ,
     }
 </script>
 
 <template>
   <div>
-    <div class="board">
+    <div v-if="solved.length === 0" class="board">
       <div class="row" v-for="row,x in boardArray">
         <div class="col" v-for="val,y in row">
           <div :class="getClass(x, y)">
-            <input v-if="fixed(x, y)" size="1" autocomplete="off" maxlength="1" :value="val" disabled>
-            <input v-if="!fixed(x, y)" size="1" autocomplete="off" maxlength="1" :value="val">
+            <input size="1" autocomplete="off" maxlength="1"
+                   :value="val" :disabled="fixed(x,y)"
+                   @input="evt => setCell(x, y, evt.target.value)"
+            >
           </div>
         </div>
       </div>
     </div>
+
+    <div v-if="solved" class="board">
+      <div class="row" v-for="row,x in solvedArray">
+        <div class="col" v-for="val,y in row">
+          <div :class="getClass(x, y)">
+            <input size="1" autocomplete="off" maxlength="1"
+                   :value="val" :disabled="fixed(x,y)"
+                   @input="evt => setCell(x, y, evt.target.value)"
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button @click.prevent="doSolve()">Solve</button>
+
   </div>
 </template>
 

@@ -17,6 +17,8 @@ export default function Board() {
     function Set(row, col, val, fixed = false) {
         state.grid[row * 9 + col] = val
 
+        if (val === null) return
+
         const sq = cellLocation(row, col)
         if (!state.props['sq' + sq]) state.props['sq' + sq] = {}
         state.props['sq' + sq][val] = true
@@ -47,7 +49,8 @@ export default function Board() {
     }
 
     function GetFixed(row, col) {
-        return state.props['fixed'][row*9+col]
+        if (!state.props['fixed']) state.props['fixed'] = {}
+        return state.props['fixed'][row * 9 + col]
     }
 
     function AsArray() {

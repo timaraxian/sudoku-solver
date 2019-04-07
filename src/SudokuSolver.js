@@ -24,7 +24,7 @@ export default function Solver() {
                 continue
             }
 
-            let j = board.Get(row,col) === null ? 1 : board.Get(row,col)
+            let j = board.Get(row, col) === null ? 1 : board.Get(row, col)
             let set = false
             if (backtracking) {
                 board.UnSet(row, col, j)
@@ -41,7 +41,7 @@ export default function Solver() {
             }
             if (!set) {
                 backtracking = true
-                board.UnSet(row,col)
+                board.Set(row, col, null)
                 i--
                 continue
             }
