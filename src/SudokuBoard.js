@@ -61,5 +61,10 @@ export default function Board() {
         return 3 * Math.floor((row) / 3) + Math.floor((col) / 3)
     }
 
-    return { Set, Get, AsArray, CanSet, UnSet, GetFixed }
+    function Fresh() {
+        state.grid = new Array(81).fill(null),
+        state.props = {}
+    }
+
+    return { Set, Get, AsArray, CanSet, UnSet, GetFixed, Fresh }
 }
