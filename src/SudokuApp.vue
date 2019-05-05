@@ -9,17 +9,12 @@
                 board: Board(),
                 solver: Solver(),
                 solved: [],
+                boardArray: null,
+                err: "",
             }
         },
 
         computed: {
-            boardArray() {
-                const boardArray = []
-                for (let j = 0; j < 9; j++) {
-                    boardArray[j] = this.board.AsArray().slice(j * 9, j * 9 + 9)
-                }
-                return boardArray
-            },
             solvedArray() {
                 const solvedArray = []
                 for (let j = 0; j < 9; j++) {
@@ -28,13 +23,25 @@
                 return solvedArray
             },
             isSolved() {
-                return this.solved.length > 0
+                return this.solved.length === 81
             }
         },
 
         methods: {
+            updateBoardArray() {
+                const boardArray = []
+                for (let j = 0; j < 9; j++) {
+                    boardArray[j] = this.board.AsArray().slice(j * 9, j * 9 + 9)
+                }
+                this.boardArray = boardArray
+            },
             doSolve() {
-                this.solved = this.solver.Solve(this.board.AsArray())
+                const solverResp = this.solver.Solve(this.board.AsArray())
+                if (solverResp === "Unsolvable") {
+                    this.err = solverResp
+                    return
+                }
+                this.solved = solverResp
             },
             clearBoard() {
                 location.reload()
@@ -66,21 +73,32 @@
             },
             fixed(row, col) { return this.board.GetFixed(row, col) },
             setCell(row, col, val) {
+                if (!this.board.CanSet(row, col, val)) {
+                    this.updateBoardArray()
+                    this.err = "InvalidValue"
+                    return
+                }
+                this.err = ""
                 this.board.Set(row, col, val)
+                this.updateBoardArray()
             },
+        },
+
+        mounted() {
+            this.updateBoardArray()
         },
     }
 </script>
 
 <template>
-  <div>
+  <div v-if="boardArray">
     <div class="Page">
       <div class="Title">
         <div class="TitleText">Sudoku Solver</div>
       </div>
 
       <div class="Sudoku">
-        <div v-if="solved.length === 0" class="board">
+        <div v-if="!isSolved" class="board">
           <div class="row" v-for="row,x in boardArray">
             <div class="col" v-for="val,y in row">
               <div :class="getClass(x, y)">
@@ -98,7 +116,7 @@
             <div class="col" v-for="val,y in row">
               <div :class="getClass(x, y)">
                 <input size="1" autocomplete="off" maxlength="1"
-                       :value="val" :disabled="fixed(x,y)"
+                       :value="val" :disabled="true"
                        @input="evt => setCell(x, y, evt.target.value)"
                 >
               </div>
@@ -119,6 +137,7 @@
           </div>
         </div>
       </div>
+      <div v-if="err" class="Error">{{err}}</div>
       <div class="FooterBuffer"></div>
     </div>
 
@@ -161,6 +180,10 @@
           display: inline;
         }
       }
+    }
+
+    .Error {
+      background: #FFA7A7;
     }
   }
 

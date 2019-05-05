@@ -15,6 +15,8 @@ export default function Board() {
     }
 
     function Set(row, col, val, fixed = false) {
+        if (!CanSet(row, col, val)) throw new Error("InvalidValue")
+
         state.grid[row * 9 + col] = val
 
         if (val === null) return
@@ -61,10 +63,5 @@ export default function Board() {
         return 3 * Math.floor((row) / 3) + Math.floor((col) / 3)
     }
 
-    function Fresh() {
-        state.grid = new Array(81).fill(null),
-        state.props = {}
-    }
-
-    return { Set, Get, AsArray, CanSet, UnSet, GetFixed, Fresh }
+    return { Set, Get, AsArray, CanSet, UnSet, GetFixed }
 }

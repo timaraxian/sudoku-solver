@@ -7,7 +7,12 @@ export default function Solver() {
         for (let row = 0; row < 9; row++) {
             for (let col = 0; col < 9; col++) {
                 if (boardArray[row * 9 + col]) {
-                    board.Set(row, col, boardArray[row * 9 + col], true)
+                    try {
+                        board.Set(row, col, boardArray[row * 9 + col], true)
+                    }
+                    catch(err) {
+                        return err
+                    }
                 }
             }
         }
