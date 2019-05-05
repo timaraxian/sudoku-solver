@@ -131,4 +131,12 @@ describe("Board", () => {
         expect(board.AsArray()).toEqual(expectedArray)
     })
 
+    it("doesn't allow an invalid board to be initialised", () => {
+        const board = Board()
+
+        //row0
+        board.Set(0, 0, 1)
+        expect(() => {board.Set(0, 2, 1)}).toThrowError("InvalidValue")
+    })
+
 })
