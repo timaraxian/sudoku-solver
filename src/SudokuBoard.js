@@ -5,6 +5,10 @@ export default function Board() {
     }
 
     function CanSet(row, col, val) {
+        if (val && !val.toString().match(/[1-9]/)) {
+            return false
+        }
+
         const sq = cellLocation(row, col)
 
         return (
