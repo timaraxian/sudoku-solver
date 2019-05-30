@@ -104,6 +104,7 @@
               <div :class="getClass(x, y)">
                 <input size="1" autocomplete="off" maxlength="1"
                        :value="val" :disabled="fixed(x,y)"
+                       class="TextInput"
                        @input="evt => setCell(x, y, evt.target.value)"
                 >
               </div>
@@ -117,6 +118,7 @@
               <div :class="getClass(x, y)">
                 <input size="1" autocomplete="off" maxlength="1"
                        :value="val" :disabled="true"
+                       class="TextInput"
                        @input="evt => setCell(x, y, evt.target.value)"
                 >
               </div>
@@ -185,6 +187,13 @@
     .Error {
       background: #FFA7A7;
     }
+  }
+
+  .TextInput {
+    max-width: 14px;
+    min-width: 14px;
+    max-height: 14px;
+    min-height: 14px;
   }
 
   .Footer {
